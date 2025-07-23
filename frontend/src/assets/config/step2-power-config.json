@@ -1,0 +1,151 @@
+{
+  "step": 2,
+  "title": "Power Configuration",
+  "description": "Select power distribution and regional standards for your HPC system",
+  "powerConfigurations": [
+    {
+      "id": "full-dc-power",
+      "name": "Full DC Power",
+      "description": "DC power for all components including compute systems and infrastructure",
+      "efficiency": 95,
+      "isRecommended": true,
+      "icon": "⚡",
+      "requirements": [
+        "DC power infrastructure",
+        "High-efficiency racks",
+        "DC power distribution"
+      ],
+      "characteristics": {
+        "powerType": "DC",
+        "efficiency": "95%",
+        "infrastructure": "DC power infrastructure required",
+        "distribution": "High-efficiency racks, DC power distribution"
+      }
+    },
+    {
+      "id": "full-ac-power",
+      "name": "Full AC Power",
+      "description": "AC power for all components with standard power distribution",
+      "efficiency": 92,
+      "isRecommended": false,
+      "icon": "🔌",
+      "requirements": [
+        "Standard AC infrastructure",
+        "Standard racks",
+        "AC power distribution"
+      ],
+      "characteristics": {
+        "powerType": "AC",
+        "efficiency": "92%",
+        "infrastructure": "Standard AC infrastructure",
+        "distribution": "Standard racks, AC power distribution"
+      }
+    },
+    {
+      "id": "dc-compute-only",
+      "name": "DC for Compute Only",
+      "description": "DC power for compute systems, AC power for networking and storage",
+      "efficiency": 93,
+      "isRecommended": false,
+      "icon": "⚡",
+      "requirements": [
+        "Mixed power infrastructure",
+        "High-efficiency + Standard racks",
+        "Mixed power distribution"
+      ],
+      "characteristics": {
+        "powerType": "Mixed (DC/AC)",
+        "efficiency": "93%",
+        "infrastructure": "Mixed power infrastructure",
+        "distribution": "High-efficiency + Standard racks, Mixed power distribution"
+      }
+    }
+  ],
+  "regions": [
+    {
+      "id": "united-states",
+      "name": "United States",
+      "code": "US",
+      "standards": "NEMA",
+      "voltage": "120V/240V",
+      "description": "NEMA • 120V/240V",
+      "powerMultiplier": 1.0,
+      "basePowerConsumption": 850
+    },
+    {
+      "id": "european-union",
+      "name": "European Union",
+      "code": "EU",
+      "standards": "IEC",
+      "voltage": "230V/400V",
+      "description": "IEC • 230V/400V",
+      "powerMultiplier": 1.05,
+      "basePowerConsumption": 890
+    },
+    {
+      "id": "singapore",
+      "name": "Singapore",
+      "code": "SG",
+      "standards": "SS",
+      "voltage": "230V",
+      "description": "SS • 230V",
+      "powerMultiplier": 0.98,
+      "basePowerConsumption": 830
+    },
+    {
+      "id": "republic-of-korea",
+      "name": "Republic of Korea",
+      "code": "KR",
+      "standards": "KS",
+      "voltage": "220V/380V",
+      "description": "KS • 220V/380V",
+      "powerMultiplier": 1.02,
+      "basePowerConsumption": 870
+    },
+    {
+      "id": "india",
+      "name": "India",
+      "code": "IN",
+      "standards": "IS",
+      "voltage": "230V/400V",
+      "description": "IS • 230V/400V",
+      "powerMultiplier": 0.95,
+      "basePowerConsumption": 810
+    }
+  ],
+  "powerCalculation": {
+    "baseConsumption": {
+      "minicluster": {
+        "4": 480,
+        "8": 720
+      },
+      "supercluster": {
+        "16": 1200,
+        "32": 2100,
+        "64": 3800,
+        "128": 7200,
+        "192": 10500,
+        "256": 13800,
+        "320": 17100,
+        "384": 20400,
+        "448": 23700,
+        "512": 27000
+      }
+    },
+    "efficiencyMultipliers": {
+      "full-dc-power": 0.95,
+      "full-ac-power": 0.92,
+      "dc-compute-only": 0.93
+    }
+  },
+  "validation": {
+    "required": [
+      "powerConfiguration",
+      "region"
+    ],
+    "dependencies": {
+      "powerConfiguration": "required",
+      "region": "required"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+<div class="step1-container">
+    <div class="step-header">
+        <h2>System Type</h2>
+    </div>
+
+    <!-- Select System Type -->
+    <div class="form-section">
+        <h3>Select System Type</h3>
+        <div class="system-type-card" *ngIf="firstSystemType" [class.selected]="selectedSystemType"
+            (click)="onSystemTypeSelect(firstSystemType)">
+            <div class="card-content">
+                <div class="icon">🖥️</div>
+                <div class="info">
+                    <h4>{{ firstSystemType.name }}</h4>
+                    <p>{{ firstSystemType.description }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Select Deployment Type -->
+    <div class="form-section" *ngIf="availableDeploymentTypes.length > 0">
+        <h3>Select Deployment Type</h3>
+        <div class="deployment-types">
+            <div class="deployment-card" *ngFor="let deployment of availableDeploymentTypes"
+                [class.selected]="selectedDeploymentType?.id === deployment.id"
+                (click)="onDeploymentTypeSelect(deployment)">
+                <div class="card-content">
+                    <div class="icon">
+                        {{ deployment.id === 'supercluster' ? '🏢' : '⚡' }}
+                    </div>
+                    <div class="info">
+                        <h4>{{ deployment.name }}</h4>
+                        <p>{{ deployment.description }} ({{ deployment.minNodes }}-{{ deployment.maxNodes }} nodes)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Number of Compute Nodes -->
+    <div class="form-section" *ngIf="availableNodeCounts.length > 0">
+        <h3>Number of Compute Nodes</h3>
+        <select class="form-select" [value]="selectedNodes || ''" (change)="onNodesSelect($event)">
+            <option value="" disabled>Select number of nodes</option>
+            <option *ngFor="let nodeCount of availableNodeCounts" [value]="nodeCount">
+                {{ nodeCount }} nodes
+            </option>
+        </select>
+    </div>
+
+    <!-- Nodes per Rack -->
+    <div class="form-section" *ngIf="availableNodesPerRack.length > 0 && selectedNodes">
+        <h3>Nodes per Rack</h3>
+        <select class="form-select" [value]="selectedNodesPerRack || ''" (change)="onNodesPerRackSelect($event)">
+            <option value="" disabled>Select nodes per rack</option>
+            <option *ngFor="let nodesPerRack of availableNodesPerRack" [value]="nodesPerRack">
+                {{ nodesPerRack }} nodes per rack{{ isRecommended(nodesPerRack) ? ' (recommended)' : '' }}
+            </option>
+        </select>
+    </div>
+
+    <!-- Next Button -->
+    <div class="form-actions">
+        <button class="btn-next" [disabled]="!isFormValid()" (click)="onNext()">
+            Next: Power Configuration
+        </button>
+    </div>
+</div>

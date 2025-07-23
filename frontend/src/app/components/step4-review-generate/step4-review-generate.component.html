@@ -1,0 +1,160 @@
+<div class="step4-container">
+    <div class="step-header">
+        <h2>Review & Generate</h2>
+    </div>
+
+    <!-- Configuration Summary -->
+    <div class="configuration-review" *ngIf="isConfigurationComplete">
+
+        <!-- Configuration Summary Card -->
+        <div class="config-section">
+            <div class="section-header">
+                <h3>📋 Configuration Summary</h3>
+            </div>
+            <div class="config-details">
+                <p style="color: #666; margin-bottom: 20px;">Review your HPC system configuration before generating</p>
+
+                <!-- Summary Grid -->
+                <div class="summary-layout">
+                    <div class="summary-column">
+                        <h4>System Specifications</h4>
+                        <div class="spec-item"><strong>Type:</strong> {{ systemConfiguration?.systemType?.name }}</div>
+                        <div class="spec-item"><strong>Deployment:</strong> {{ systemConfiguration?.deploymentType?.name
+                            }}</div>
+                        <div class="spec-item"><strong>Node Count:</strong> {{ systemConfiguration?.selectedNodes }}
+                        </div>
+                        <div class="spec-item"><strong>Node Density:</strong> {{ systemConfiguration?.nodesPerRack }}
+                            per rack</div>
+                    </div>
+
+                    <div class="summary-column">
+                        <h4>Power Configuration</h4>
+                        <div class="spec-item"><strong>Power Type:</strong> {{
+                            powerConfiguration?.powerConfiguration?.name }}</div>
+                        <div class="spec-item"><strong>Region:</strong> {{ powerConfiguration?.region?.name }}</div>
+                        <div class="spec-item"><strong>Total Power:</strong> {{
+                            powerConfiguration?.estimatedPowerConsumption }} kW</div>
+                    </div>
+                </div>
+
+                <div class="summary-layout" style="margin-top: 16px;">
+                    <div class="summary-column">
+                        <h4>Storage Configuration</h4>
+                        <div class="spec-item"><strong>Protocol:</strong> {{ storageConfiguration?.storageProtocol?.name
+                            }}</div>
+                        <div class="spec-item"><strong>Vendor:</strong> {{ storageConfiguration?.storageVendor?.name }}
+                        </div>
+                        <div class="spec-item"><strong>Support:</strong> {{
+                            storageConfiguration?.supportOption?.description }}</div>
+                    </div>
+
+                    <div class="summary-column">
+                        <h4>Pricing</h4>
+                        <div class="spec-item pricing-display" [ngClass]="{
+                            'loading': isPriceLoading,
+                            'error': priceError,
+                            'loaded': currentPrice
+                        }">
+                            <strong>Total Price:</strong>
+                            <span class="price-value">{{ displayPrice }}</span>
+                            <div class="price-loading-indicator" *ngIf="isPriceLoading">🔄</div>
+                            <div class="price-error-indicator" *ngIf="priceError">❌</div>
+                        </div>
+                        <div class="price-details" *ngIf="currentPrice">
+                            <small>✅ Real-time pricing for {{ systemConfiguration?.selectedNodes }} nodes</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Validation Status -->
+        <div class="config-section">
+            <div class="section-header">
+                <h3>✅ Validation Status</h3>
+            </div>
+            <div class="config-details">
+                <div class="validation-item">
+                    <span class="validation-icon">✅</span>
+                    <span class="validation-text">Configuration is valid and ready to generate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Configuration Changed Warning -->
+        <div class="config-section" *ngIf="configuration?.isComplete && hasConfigChanged">
+            <div class="section-header">
+                <h3>⚠️ Configuration Updated</h3>
+            </div>
+            <div class="config-details">
+                <p style="color: #e67e22; margin-bottom: 16px;">
+                    Your configuration has been modified since the last generation.
+                    Please regenerate to update the bill of materials and system specifications.
+                </p>
+            </div>
+        </div>
+
+        <!-- Generated Configuration (הופיע רק אחרי Generate) -->
+        <div class="config-section" *ngIf="configuration?.isComplete && !hasConfigChanged">
+            <div class="section-header">
+                <h3>📄 Generated Configuration</h3>
+            </div>
+            <div class="config-details">
+                <p style="color: #666; margin-bottom: 16px;">Bill of Materials and system specifications</p>
+
+                <div class="generated-info">
+                    <div class="generated-item"><strong>Total Components:</strong> 42</div>
+                    <div class="generated-item"><strong>Total Racks:</strong> {{ systemConfiguration?.totalRacks }}
+                    </div>
+                    <div class="generated-item"><strong>Configuration ID:</strong> LOCAL-{{ getCurrentTimestamp() }}
+                    </div>
+                </div>
+
+                <div class="export-buttons">
+                    <button class="btn-export-small" [disabled]="isExporting" (click)="onExportJSON()">
+                        📄 Export JSON
+                    </button>
+                    <button class="btn-export-small" [disabled]="isExporting" (click)="onExportPDF()">
+                        📄 Export PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incomplete Configuration Warning -->
+    <div class="incomplete-warning" *ngIf="!isConfigurationComplete">
+        <div class="warning-content">
+            <h3>⚠️ Configuration Incomplete</h3>
+            <p>Please complete all previous steps before generating your configuration.</p>
+            <div class="missing-steps">
+                <span *ngIf="!systemConfiguration" class="missing-step">• System Configuration</span>
+                <span *ngIf="!powerConfiguration" class="missing-step">• Power Configuration</span>
+                <span *ngIf="!storageConfiguration" class="missing-step">• Storage Configuration</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="form-actions">
+        <div class="action-group left">
+            <button class="btn-previous" (click)="onPrevious()">
+                Previous
+            </button>
+        </div>
+
+        <div class="action-group right">
+            <button class="btn-generate"
+                *ngIf="isConfigurationComplete && (!configuration?.isComplete || hasConfigChanged)"
+                [disabled]="isGenerating" (click)="onGenerateConfiguration()">
+                {{ isGenerating ? 'Generating...' : (configuration?.isComplete ? 'Regenerate Configuration' : 'Generate
+                Configuration') }}
+            </button>
+
+            <button class="btn-new-config" *ngIf="configuration?.isComplete && !hasConfigChanged"
+                (click)="onNewConfiguration()">
+                🔄 Start New Configuration
+            </button>
+        </div>
+    </div>
+</div>

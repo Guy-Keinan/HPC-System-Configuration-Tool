@@ -1,0 +1,60 @@
+services:
+  # PostgreSQL Database
+  postgres-db:
+    image: postgres:15-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_DB: hpc_config
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # FastAPI Backend - Minimal API for HPC Configuration
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres-db:5432/hpc_config
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+    depends_on:
+      postgres-db:
+        condition: service_healthy
+    restart: unless-stopped
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Angular Frontend
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules  # Prevent overwriting node_modules
+    depends_on:
+      - backend
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge

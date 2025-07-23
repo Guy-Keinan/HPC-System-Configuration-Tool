@@ -1,0 +1,53 @@
+<div class="app-container">
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">
+        <span class="logo-icon">🖥️</span>
+        <span class="logo-text">HPC Configurator</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-secondary">Settings</button>
+        <button class="btn-secondary">Profile</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="page-header">
+      <h1>{{ title }}</h1>
+      <p>Configure your high-performance computing cluster with intelligent validation and real-time pricing.</p>
+    </div>
+
+    <!-- Stepper Navigation -->
+    <div class="stepper">
+      <div class="step" [class.active]="currentStep === 1" [class.completed]="isStepCompleted(1)"
+        [class.accessible]="isStepAccessible(1)" (click)="onStepClick(1)">
+        <span class="step-number">1</span>
+        <span class="step-label">System Type</span>
+      </div>
+      <div class="step" [class.active]="currentStep === 2" [class.completed]="isStepCompleted(2)"
+        [class.accessible]="isStepAccessible(2)" (click)="onStepClick(2)">
+        <span class="step-number">2</span>
+        <span class="step-label">Power Configuration</span>
+      </div>
+      <div class="step" [class.active]="currentStep === 3" [class.completed]="isStepCompleted(3)"
+        [class.accessible]="isStepAccessible(3)" (click)="onStepClick(3)">
+        <span class="step-number">3</span>
+        <span class="step-label">Storage Configuration</span>
+      </div>
+      <div class="step" [class.active]="currentStep === 4" [class.completed]="isStepCompleted(4)"
+        [class.accessible]="isStepAccessible(4)" (click)="onStepClick(4)">
+        <span class="step-number">4</span>
+        <span class="step-label">Review & Generate</span>
+      </div>
+    </div>
+
+    <!-- Step Content -->
+    <div class="step-content">
+      <app-step1-system-type *ngIf="currentStep === 1"></app-step1-system-type>
+      <app-step2-power-config *ngIf="currentStep === 2"></app-step2-power-config>
+      <app-step3-storage-config *ngIf="currentStep === 3"></app-step3-storage-config>
+      <app-step4-review-generate *ngIf="currentStep === 4"></app-step4-review-generate>
+    </div>
+  </main>
+</div>

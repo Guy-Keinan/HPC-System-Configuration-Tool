@@ -1,0 +1,144 @@
+{
+    "version": "1.0.0",
+    "lastUpdated": "2025-01-23",
+    "metadata": {
+        "step": 1,
+        "title": "System Type Configuration",
+        "description": "Configure your HPC system deployment type and node distribution"
+    },
+    "systemTypes": [
+        {
+            "id": "datacore_x300",
+            "name": "DataCore X300",
+            "description": "High-performance computing system with scalable architecture for demanding workloads",
+            "isActive": true,
+            "specifications": {
+                "cpuArchitecture": "x86_64",
+                "memoryCapacity": "Up to 2TB per node",
+                "networkInterface": "InfiniBand HDR/Ethernet",
+                "powerEfficiency": "95% efficient power delivery"
+            }
+        }
+    ],
+    "deploymentTypes": {
+        "datacore_x300": [
+            {
+                "id": "minicluster",
+                "name": "MiniCluster",
+                "description": "Compact deployment for development and small-scale workloads",
+                "minNodes": 4,
+                "maxNodes": 8,
+                "availableNodeCounts": [
+                    4,
+                    8
+                ],
+                "nodesPerRackOptions": [
+                    2,
+                    4
+                ],
+                "characteristics": {
+                    "idealFor": [
+                        "Development",
+                        "Testing",
+                        "Small HPC workloads"
+                    ],
+                    "powerConsumption": "Low to moderate",
+                    "scalability": "Limited but cost-effective"
+                },
+                "dependencies": {
+                    "powerRequirements": {
+                        "estimatedKW": {
+                            "4": 12,
+                            "8": 24
+                        }
+                    },
+                    "coolingRequirements": {
+                        "airflow": "Standard datacenter cooling",
+                        "temperatureRange": "18-24°C"
+                    }
+                }
+            },
+            {
+                "id": "supercluster",
+                "name": "SuperCluster",
+                "description": "Large-scale deployment for enterprise and research applications",
+                "minNodes": 16,
+                "maxNodes": 512,
+                "availableNodeCounts": [
+                    16,
+                    32,
+                    64,
+                    128,
+                    192,
+                    256,
+                    320,
+                    384,
+                    448,
+                    512
+                ],
+                "nodesPerRackOptions": [
+                    2,
+                    4
+                ],
+                "characteristics": {
+                    "idealFor": [
+                        "Large-scale HPC",
+                        "AI/ML workloads",
+                        "Research computing"
+                    ],
+                    "powerConsumption": "High - requires dedicated power infrastructure",
+                    "scalability": "Highly scalable with advanced management features"
+                },
+                "dependencies": {
+                    "powerRequirements": {
+                        "estimatedKW": {
+                            "16": 48,
+                            "32": 96,
+                            "64": 192,
+                            "128": 384,
+                            "256": 768,
+                            "512": 1536
+                        }
+                    },
+                    "coolingRequirements": {
+                        "airflow": "Enhanced cooling with liquid cooling options",
+                        "temperatureRange": "16-22°C"
+                    }
+                }
+            }
+        ]
+    },
+    "validationRules": {
+        "nodeCountValidation": {
+            "rule": "selected_nodes must be in availableNodeCounts array",
+            "errorMessage": "Invalid node count for selected deployment type"
+        },
+        "nodesPerRackValidation": {
+            "rule": "nodes_per_rack must be in nodesPerRackOptions array",
+            "errorMessage": "Invalid nodes per rack configuration"
+        },
+        "rackCalculation": {
+            "formula": "Math.ceil(selected_nodes / nodes_per_rack)",
+            "description": "Calculate total number of racks required"
+        }
+    },
+    "defaultValues": {
+        "systemType": "datacore_x300",
+        "deploymentType": null,
+        "selectedNodes": null,
+        "nodesPerRack": null
+    },
+    "nextStepDependencies": {
+        "powerConfigurationNeeds": {
+            "dataRequired": [
+                "systemType",
+                "deploymentType",
+                "selectedNodes"
+            ],
+            "calculatedValues": [
+                "estimatedPowerKW",
+                "totalRacks"
+            ]
+        }
+    }
+}

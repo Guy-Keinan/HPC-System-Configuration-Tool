@@ -1,0 +1,307 @@
+.step2-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.step-header {
+    margin-bottom: 30px;
+
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+}
+
+.form-section {
+    margin-bottom: 30px;
+
+    h3 {
+        font-size: 16px;
+        font-weight: 500;
+        color: #333;
+        margin: 0 0 15px 0;
+    }
+}
+
+// Power Configuration Cards
+.power-configurations {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.power-card {
+    border: 2px solid #E1E5E9;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    padding: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        border-color: #4A90E2;
+        background-color: #F8FBFF;
+    }
+
+    &.selected {
+        border-color: #4A90E2;
+        background-color: #F0F8FF;
+    }
+
+    &.recommended {
+        position: relative;
+
+        &.selected {
+            border-color: #4A90E2;
+            background-color: #E6F3FF;
+        }
+    }
+}
+
+.card-content {
+    padding: 16px;
+}
+
+.card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.icon {
+    font-size: 20px;
+    width: 24px;
+    text-align: center;
+    margin-top: 2px;
+}
+
+.title-section {
+    flex: 1;
+
+    h4 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin: 0 0 4px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    p {
+        font-size: 14px;
+        color: #666;
+        margin: 0;
+        line-height: 1.4;
+    }
+}
+
+.recommended-badge {
+    background-color: #28a745;
+    color: white;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.efficiency {
+    text-align: right;
+
+    .efficiency-value {
+        background-color: #E8F5E8;
+        color: #28a745;
+        font-size: 12px;
+        font-weight: 500;
+        padding: 4px 8px;
+        border-radius: 4px;
+        white-space: nowrap;
+    }
+}
+
+.requirements {
+    font-size: 13px;
+    color: #666;
+    border-top: 1px solid #F0F1F3;
+    padding-top: 12px;
+
+    strong {
+        color: #333;
+    }
+}
+
+// Region Selection
+.form-select {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #E1E5E9;
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: #FFFFFF;
+    color: #333;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+        outline: none;
+        border-color: #4A90E2;
+        box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+    }
+
+    option {
+        padding: 8px;
+    }
+}
+
+.region-details {
+    margin-top: 8px;
+}
+
+.region-info {
+    background-color: #F8F9FA;
+    border: 1px solid #E1E5E9;
+    border-radius: 4px;
+    padding: 8px 12px;
+
+    .region-code {
+        font-size: 13px;
+        color: #666;
+    }
+}
+
+// Summary Section
+.summary-section {
+    background-color: #F0F8FF;
+    border: 1px solid #D6E9FF;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.summary-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 16px;
+
+    .icon {
+        font-size: 18px;
+        color: #4A90E2;
+    }
+
+    h3 {
+        font-size: 16px;
+        font-weight: 600;
+        color: #333;
+        margin: 0;
+    }
+}
+
+.summary-content {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.summary-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+
+    &.full-width {
+        grid-template-columns: 1fr;
+    }
+}
+
+.summary-item {
+    font-size: 14px;
+    color: #555;
+
+    strong {
+        color: #333;
+        font-weight: 500;
+    }
+}
+
+// Form Actions
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #E1E5E9;
+}
+
+.btn-previous {
+    background: none;
+    border: 1px solid #E1E5E9;
+    color: #666;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #F8F9FA;
+        border-color: #D1D5D9;
+    }
+}
+
+.btn-next {
+    background-color: #4A90E2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover:not(:disabled) {
+        background-color: #357ABD;
+        transform: translateY(-1px);
+    }
+
+    &:disabled {
+        background-color: #B0B0B0;
+        cursor: not-allowed;
+        transform: none;
+    }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+    .step2-container {
+        padding: 15px;
+    }
+
+    .card-header {
+        flex-direction: column;
+        gap: 8px;
+        align-items: flex-start;
+    }
+
+    .efficiency {
+        text-align: left;
+        margin-top: 8px;
+    }
+
+    .summary-row {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 12px;
+    }
+}

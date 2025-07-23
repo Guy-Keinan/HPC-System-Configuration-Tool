@@ -1,0 +1,93 @@
+<div class="step2-container">
+    <div class="step-header">
+        <h2>Power Configuration</h2>
+    </div>
+
+    <!-- Power Configuration Options -->
+    <div class="form-section">
+        <h3>Power Configuration</h3>
+        <div class="power-configurations">
+            <div class="power-card" *ngFor="let powerConfig of config?.powerConfigurations"
+                [class.selected]="selectedPowerConfiguration?.id === powerConfig.id"
+                [class.recommended]="powerConfig.isRecommended" (click)="onPowerConfigurationSelect(powerConfig)">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="icon">{{ powerConfig.icon }}</div>
+                        <div class="title-section">
+                            <h4>
+                                {{ powerConfig.name }}
+                                <span class="recommended-badge" *ngIf="powerConfig.isRecommended">Recommended</span>
+                            </h4>
+                            <p>{{ powerConfig.description }}</p>
+                        </div>
+                        <div class="efficiency">
+                            <span class="efficiency-value">{{ powerConfig.efficiency }}% efficient</span>
+                        </div>
+                    </div>
+                    <div class="requirements">
+                        <strong>Requirements:</strong> {{ powerConfig.requirements.join(', ') }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Region Selection -->
+    <div class="form-section" *ngIf="selectedPowerConfiguration">
+        <h3>Region</h3>
+        <select class="form-select" [value]="selectedRegion?.id || ''" (change)="onRegionSelect($event)">
+            <option value="" disabled>Select region</option>
+            <option *ngFor="let region of config?.regions" [value]="region.id">
+                {{ region.name }}
+            </option>
+        </select>
+
+        <!-- Region Details -->
+        <div class="region-details" *ngIf="selectedRegion">
+            <div class="region-info">
+                <span class="region-code">{{ selectedRegion.description }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Power Configuration Summary -->
+    <div class="summary-section" *ngIf="showSummary">
+        <div class="summary-header">
+            <div class="icon">⚡</div>
+            <h3>Power Configuration Summary</h3>
+        </div>
+        <div class="summary-content">
+            <div class="summary-row">
+                <div class="summary-item">
+                    <strong>Configuration:</strong> {{ selectedPowerConfiguration?.name }}
+                </div>
+                <div class="summary-item">
+                    <strong>Region:</strong> {{ selectedRegion?.name }}
+                </div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item">
+                    <strong>Efficiency:</strong> {{ calculatedEfficiency }}%
+                </div>
+                <div class="summary-item">
+                    <strong>Standards:</strong> {{ selectedRegion?.standards }}
+                </div>
+            </div>
+            <div class="summary-row full-width">
+                <div class="summary-item">
+                    <strong>Estimated Power Consumption:</strong> {{ estimatedPowerConsumption }} kW
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-actions">
+        <button class="btn-previous" (click)="onPrevious()">
+            Previous
+        </button>
+        <button class="btn-next" [disabled]="!isFormValid()" (click)="onNext()">
+            Next: Storage Configuration
+        </button>
+    </div>
+</div>

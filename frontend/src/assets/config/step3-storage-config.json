@@ -1,0 +1,192 @@
+{
+    "step": 3,
+    "title": "Storage Configuration",
+    "description": "Configure storage network protocol and vendor solutions for optimal performance",
+    "storageNetworkProtocols": [
+        {
+            "id": "high-speed-interconnect",
+            "name": "High-Speed Interconnect",
+            "description": "Ultra-low latency networking for demanding HPC workloads",
+            "bandwidth": "400 Gbps",
+            "latency": "< 1μs latency",
+            "isRecommended": true,
+            "icon": "🚀",
+            "characteristics": {
+                "performance": "Ultra-high performance",
+                "latency": "Sub-microsecond",
+                "bandwidth": "400 Gbps",
+                "idealFor": "Demanding HPC workloads"
+            }
+        },
+        {
+            "id": "ethernet",
+            "name": "Ethernet",
+            "description": "Standard networking with broad vendor compatibility",
+            "bandwidth": "100 Gbps",
+            "latency": "< 10μs latency",
+            "isRecommended": false,
+            "icon": "🌐",
+            "characteristics": {
+                "performance": "Standard performance",
+                "latency": "Low latency",
+                "bandwidth": "100 Gbps",
+                "idealFor": "Broad vendor compatibility"
+            }
+        }
+    ],
+    "storageVendors": {
+        "high-speed-interconnect": [
+            {
+                "id": "datadirect-networks",
+                "name": "DataDirect Networks",
+                "description": "A400 High-Performance Storage",
+                "performance": "Excellent",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "High-Performance Storage",
+                    "specialization": "Parallel file systems",
+                    "performance": "Excellent",
+                    "capacity": "Exabyte scale"
+                }
+            },
+            {
+                "id": "ibm",
+                "name": "IBM",
+                "description": "Elastic Storage System",
+                "performance": "Excellent",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "Elastic Storage System",
+                    "specialization": "Enterprise storage",
+                    "performance": "Excellent",
+                    "capacity": "Highly scalable"
+                }
+            },
+            {
+                "id": "vast-data",
+                "name": "VAST Data",
+                "description": "Universal Storage Platform",
+                "performance": "Very Good",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "Universal Storage Platform",
+                    "specialization": "All-flash storage",
+                    "performance": "Very Good",
+                    "capacity": "Petabyte scale"
+                }
+            },
+            {
+                "id": "netapp",
+                "name": "NetApp",
+                "description": "AFF All-Flash Arrays",
+                "performance": "Very Good",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "All-Flash Arrays",
+                    "specialization": "Enterprise NAS",
+                    "performance": "Very Good",
+                    "capacity": "Multi-petabyte"
+                }
+            },
+            {
+                "id": "wekaio",
+                "name": "WekaIO",
+                "description": "Parallel File System",
+                "performance": "Excellent",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "Parallel File System",
+                    "specialization": "HPC and AI workloads",
+                    "performance": "Excellent",
+                    "capacity": "Exabyte capable"
+                }
+            }
+        ],
+        "ethernet": [
+            {
+                "id": "dell-technologies",
+                "name": "Dell Technologies",
+                "description": "PowerScale Scale-Out Storage",
+                "performance": "Good",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "Scale-Out Storage",
+                    "specialization": "NAS and object storage",
+                    "performance": "Good",
+                    "capacity": "Multi-petabyte"
+                }
+            },
+            {
+                "id": "netapp-a90",
+                "name": "NetApp A90",
+                "description": "High-Performance AFF",
+                "performance": "Very Good",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "High-Performance AFF",
+                    "specialization": "All-flash arrays",
+                    "performance": "Very Good",
+                    "capacity": "Petabyte scale"
+                }
+            },
+            {
+                "id": "pure-storage",
+                "name": "Pure Storage",
+                "description": "FlashBlade Scale-Out Storage",
+                "performance": "Very Good",
+                "icon": "💾",
+                "characteristics": {
+                    "type": "FlashBlade Scale-Out Storage",
+                    "specialization": "Modern data platform",
+                    "performance": "Very Good",
+                    "capacity": "Multi-petabyte"
+                }
+            }
+        ]
+    },
+    "supportOptions": [
+        {
+            "id": "3-years",
+            "name": "3 Years",
+            "description": "Standard support coverage",
+            "duration": 3,
+            "isRecommended": false
+        },
+        {
+            "id": "5-years",
+            "name": "5 Years",
+            "description": "Extended support coverage",
+            "duration": 5,
+            "isRecommended": true
+        }
+    ],
+    "performanceRatings": {
+        "Excellent": {
+            "color": "#000000",
+            "backgroundColor": "#000000",
+            "textColor": "#FFFFFF"
+        },
+        "Very Good": {
+            "color": "#4CAF50",
+            "backgroundColor": "#E8F5E8",
+            "textColor": "#2E7D32"
+        },
+        "Good": {
+            "color": "#FF9800",
+            "backgroundColor": "#FFF3E0",
+            "textColor": "#F57C00"
+        }
+    },
+    "validation": {
+        "required": [
+            "storageNetworkProtocol",
+            "storageVendor",
+            "supportDuration"
+        ],
+        "dependencies": {
+            "storageNetworkProtocol": "required",
+            "storageVendor": "depends on protocol selection",
+            "supportDuration": "required"
+        }
+    }
+}

@@ -1,0 +1,113 @@
+<div class="step3-container">
+    <div class="step-header">
+        <h2>Storage Configuration</h2>
+    </div>
+
+    <!-- Storage Network Protocol -->
+    <div class="form-section">
+        <h3>Storage Network Protocol</h3>
+        <div class="protocol-options">
+            <div class="protocol-card" *ngFor="let protocol of config?.storageNetworkProtocols"
+                [class.selected]="selectedStorageProtocol?.id === protocol.id"
+                [class.recommended]="protocol.isRecommended" (click)="onStorageProtocolSelect(protocol)">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="icon">{{ protocol.icon }}</div>
+                        <div class="title-section">
+                            <h4>
+                                {{ protocol.name }}
+                                <span class="recommended-badge" *ngIf="protocol.isRecommended">Recommended</span>
+                            </h4>
+                            <p>{{ protocol.description }}</p>
+                        </div>
+                        <div class="bandwidth-info">
+                            <div class="bandwidth">{{ protocol.bandwidth }}</div>
+                            <div class="latency">{{ protocol.latency }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Storage Vendor -->
+    <div class="form-section" *ngIf="selectedStorageProtocol && availableVendors.length > 0">
+        <h3>Storage Vendor ({{ selectedStorageProtocol.name }})</h3>
+        <div class="vendor-options">
+            <div class="vendor-card" *ngFor="let vendor of availableVendors"
+                [class.selected]="selectedStorageVendor?.id === vendor.id" (click)="onStorageVendorSelect(vendor)">
+                <div class="card-content">
+                    <div class="card-header">
+                        <div class="icon">{{ vendor.icon }}</div>
+                        <div class="vendor-info">
+                            <h4>{{ vendor.name }}</h4>
+                            <p>{{ vendor.description }}</p>
+                        </div>
+                        <div class="performance-badge" [ngStyle]="getPerformanceStyle(vendor.performance)">
+                            {{ vendor.performance }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Support Duration -->
+    <div class="form-section" *ngIf="selectedStorageVendor">
+        <h3>Support Duration</h3>
+        <select class="form-select" [value]="selectedSupportOption?.id || ''" (change)="onSupportOptionSelect($event)">
+            <option value="" disabled>Select support duration</option>
+            <option *ngFor="let support of config?.supportOptions" [value]="support.id">
+                {{ support.name }}{{ support.isRecommended ? ' - Recommended' : '' }}
+            </option>
+        </select>
+
+        <!-- Support Details -->
+        <div class="support-details" *ngIf="selectedSupportOption">
+            <div class="support-info">
+                <span class="support-description">{{ selectedSupportOption.description }}</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Storage Configuration Summary -->
+    <div class="summary-section" *ngIf="showSummary">
+        <div class="summary-header">
+            <div class="icon">💾</div>
+            <h3>Storage Configuration Summary</h3>
+        </div>
+        <div class="summary-content">
+            <div class="summary-row">
+                <div class="summary-item">
+                    <strong>Protocol:</strong> {{ selectedStorageProtocol?.name }}
+                </div>
+                <div class="summary-item">
+                    <strong>Vendor:</strong> {{ selectedStorageVendor?.name }}
+                </div>
+            </div>
+            <div class="summary-row">
+                <div class="summary-item">
+                    <strong>Bandwidth:</strong> {{ selectedStorageProtocol?.bandwidth }}
+                </div>
+                        <div class="summary-item">
+          <strong>Performance:</strong> {{ selectedStorageVendor?.performance }}
+        </div>
+            </div>
+            <div class="summary-row full-width">
+                <div class="summary-item">
+                    <strong>Support:</strong> {{ selectedSupportOption?.description }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Buttons -->
+    <div class="form-actions">
+        <button class="btn-previous" (click)="onPrevious()">
+            Previous
+        </button>
+        <button class="btn-next" [disabled]="!isFormValid()" (click)="onNext()">
+            Next: Review & Generate
+        </button>
+    </div>
+</div>
