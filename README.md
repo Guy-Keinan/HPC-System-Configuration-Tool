@@ -32,7 +32,7 @@ Frontend (Angular 19)  →  Backend (FastAPI)  →  Database (PostgreSQL)
 1. **Clone the repository**
    ```bash
    git clone <repository-url>
-   cd ray-network-task
+   cd HPC-System-Configuration-Tool
    ```
 
 2. **Start all services**
@@ -103,7 +103,7 @@ docker run --name postgres-local -e POSTGRES_PASSWORD=postgres -p 5432:5432 -d p
 ### Project Structure
 
 ```
-ray-network-task/
+HPC-System-Configuration-Tool/
 ├── frontend/                 # Angular application
 │   ├── src/app/
 │   │   ├── components/      # UI components
